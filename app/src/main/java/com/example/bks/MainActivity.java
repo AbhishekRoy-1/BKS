@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchData() {
         progressBar.setVisibility(View.VISIBLE);
-        String url= "http://bharatkrushiseva.in/api_user/getCropType?language=en";
+        String url= "http://bharatkrushiseva.in/api_user/getCropType";
         JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -81,7 +81,14 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> params= new HashMap<>();
+                params.put("language","en");
+                return params;
+            }
+        };
         requestQueue.add(jsonObjectRequest);
 
 
